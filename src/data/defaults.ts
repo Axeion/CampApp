@@ -1,0 +1,188 @@
+import type { RsvpEntry, PackCategory, MenuDay } from '../types'
+
+export const DEFAULT_RSVP: RsvpEntry[] = [
+  { name: 'Dalton Kock',              fri: true,  sat: true,  shirt: 'XL'        },
+  { name: 'Patrick Smith',            fri: true,  sat: false, shirt: 'XL'        },
+  { name: 'Michael Duffy',            fri: true,  sat: true,  shirt: '2XL'       },
+  { name: 'Skip Cruse',               fri: true,  sat: true,  shirt: 'L'         },
+  { name: 'Terry Winter',             fri: true,  sat: true,  shirt: '2XL'       },
+  { name: 'Justin King',              fri: true,  sat: false, shirt: 'XL'        },
+  { name: 'Will Holderness-Siglin',   fri: true,  sat: true,  shirt: '2XL'       },
+  { name: 'Camden Holderness-Siglin', fri: true,  sat: true,  shirt: 'XL'        },
+  { name: 'Luke',                     fri: true,  sat: true,  shirt: 'XL'        },
+  { name: 'Jeremiah Jones',           fri: true,  sat: true,  shirt: 'L'         },
+  { name: 'Michael Bowsaw',           fri: true,  sat: true,  shirt: 'XL'        },
+  { name: 'Greg Carlson',             fri: true,  sat: true,  shirt: 'XL (Tall)' },
+  { name: 'Blake Ursch',              fri: false, sat: true,  shirt: 'S'         },
+  { name: 'Brandon',                  fri: true,  sat: true,  shirt: '3XL'       },
+  { name: 'Matt Whitlow',             fri: true,  sat: false, shirt: 'XL'        },
+  { name: 'Kyle Barcus',              fri: true,  sat: true,  shirt: 'M'         },
+]
+
+const DEFAULT_GEAR: PackCategory[] = [
+  { category: 'Must Have - Cook & Cast Iron', color: '#6e2e2e', listType: 'gear', items: [
+    { item: '12" Cast Iron Skillet',      note: 'Eggs, hash browns, burritos' },
+    { item: '10" Cast Iron Skillet',      note: 'Bacon, overflow' },
+    { item: '12" Dutch Oven + lid',       note: 'Biscuits' },
+    { item: '10" Dutch Oven + lid',       note: 'Sausage gravy' },
+    { item: 'Lid lifter',                 note: 'Non-negotiable' },
+    { item: 'Leather / heat gloves',      note: 'Dutch oven & fire work' },
+    { item: 'Large aluminum roasting pan',note: 'Beer brat bath - disposable OK' },
+    { item: 'Long-handled tongs (x2)',    note: '2 pairs minimum' },
+    { item: 'Long-handled spatula',       note: '' },
+    { item: 'Sharp chef\'s knife',        note: '' },
+    { item: 'Cutting board',              note: 'Large, plastic' },
+    { item: 'Large mixing bowls (x2-3)',  note: '' },
+    { item: 'Ladle',                      note: 'Don\'t go disposable - gravy is heavy' },
+    { item: 'Can opener',                 note: '' },
+    { item: 'Instant read thermometer',   note: 'Steaks' },
+    { item: 'Large serving spoons (x3)',  note: '' },
+    { item: 'Cast iron trivet or plywood',note: 'Protects cabin surfaces' },
+  ]},
+  { category: 'Good to Have', color: '#2e5c3a', listType: 'gear', items: [
+    { item: 'Flat cast iron griddle',   note: 'Hash patties go much faster' },
+    { item: 'Large stock pot',          note: 'Overflow, heating water' },
+    { item: 'Wire cooling rack',        note: 'Resting steaks' },
+    { item: 'Sheet pans (x2)',          note: 'Staging + holding burrito ingredients' },
+    { item: 'Squeeze bottles',          note: 'Cleaner than passing jars for 18 guys' },
+    { item: 'Chimney starter',          note: 'Faster coal lighting' },
+    { item: 'Small propane torch',      note: 'Backup fire starter' },
+    { item: 'Propane camp stove',       note: 'Confirm cabin stove handles the volume' },
+    { item: 'Folding table (x1-2)',     note: 'Sub bar + condiment station' },
+    { item: 'Headlamp',                 note: 'Early Sat breakfast in the dark' },
+    { item: 'Pre-mixed seasoning bags', note: 'Mix at home - salt/pepper/garlic' },
+  ]},
+]
+
+const DEFAULT_SHOPPING: PackCategory[] = [
+  { category: 'Meat & Protein', color: '#3a3020', listType: 'shopping', items: [
+    { item: '80/20 ground beef',              qty: '10 lbs' },
+    { item: 'Bratwurst',                      qty: '4-5 pkgs (20-24 ct)' },
+    { item: 'Beer for brat bath (PBR/Busch)', qty: '6-12 pack' },
+    { item: 'Thick-cut bacon',                qty: '4 lbs' },
+    { item: 'Bulk breakfast sausage',         qty: '4 lbs' },
+    { item: 'Chorizo (loose/bulk)',            qty: '2 lbs' },
+    { item: 'NY Strip or Ribeye steaks',      qty: '18-20 ct' },
+    { item: 'Deli turkey',                    qty: '2 lbs' },
+    { item: 'Deli ham',                       qty: '2 lbs' },
+    { item: 'Deli roast beef',                qty: '1.5 lbs' },
+  ]},
+  { category: 'Dairy & Eggs', color: '#3a3020', listType: 'shopping', items: [
+    { item: 'Eggs',                     qty: '5 dozen' },
+    { item: 'Whole milk',               qty: '1 gallon' },
+    { item: 'Butter, unsalted',         qty: '3 lbs' },
+    { item: 'Shredded cheddar',         qty: '2 lbs' },
+    { item: 'Sliced cheese assortment', qty: '3 pkgs' },
+    { item: 'Sour cream',               qty: '16 oz' },
+  ]},
+  { category: 'Bread & Baking', color: '#3a3020', listType: 'shopping', items: [
+    { item: 'Hamburger buns',               qty: '24 ct' },
+    { item: 'Hoagie/brat rolls',            qty: '24 ct' },
+    { item: 'Sub/hoagie rolls (lunch)',     qty: '20 ct' },
+    { item: 'Large flour tortillas',        qty: '2 pkgs (30 ct)' },
+    { item: 'Grands refrigerated biscuits', qty: '4 cans' },
+    { item: 'All-purpose flour',            qty: '2 lbs' },
+  ]},
+  { category: 'Produce', color: '#3a3020', listType: 'shopping', items: [
+    { item: 'Russet potatoes',     qty: '10 lbs' },
+    { item: 'Yellow onions',       qty: '6 large' },
+    { item: 'Bell peppers, mixed', qty: '4' },
+    { item: 'Roma tomatoes',       qty: '6' },
+    { item: 'Iceberg lettuce',     qty: '2 heads' },
+    { item: 'Garlic, fresh',       qty: '1 bulb' },
+  ]},
+  { category: 'Pantry & Canned', color: '#3a3020', listType: 'shopping', items: [
+    { item: 'Cowboy baked beans, large can', qty: '4-5 cans' },
+    { item: 'Pickles, jar',                  qty: '2 jars' },
+    { item: 'Banana peppers',                qty: '1 jar' },
+    { item: 'Black olives',                  qty: '1 can' },
+    { item: 'Salsa',                         qty: '2 large jars' },
+  ]},
+  { category: 'Seasonings & Condiments', color: '#3a3020', listType: 'shopping', items: [
+    { item: 'Kosher salt',         qty: 'large box' },
+    { item: 'Black pepper',        qty: 'large' },
+    { item: 'Garlic powder',       qty: 'large' },
+    { item: 'Onion powder',        qty: '1' },
+    { item: 'Paprika',             qty: '1' },
+    { item: 'Ketchup',             qty: '2 large' },
+    { item: 'Yellow mustard',      qty: '2' },
+    { item: 'Brown/spicy mustard', qty: '1' },
+    { item: 'Mayo',                qty: '2 large jars' },
+    { item: 'Italian dressing',    qty: '2 bottles' },
+    { item: 'Hot sauce',           qty: '2 bottles' },
+    { item: 'Vegetable oil',       qty: '1 large' },
+  ]},
+  { category: 'Frozen & Refrigerated', color: '#3a3020', listType: 'shopping', items: [
+    { item: 'Frozen hash brown patties', qty: '2 large bags' },
+    { item: 'Pre-made coleslaw',         qty: 'large tub' },
+  ]},
+  { category: 'Plates, Cups & Utensils', color: '#3a3020', listType: 'shopping', items: [
+    { item: 'Heavy duty paper plates (foam-backed)',  qty: '75-100 ct' },
+    { item: 'Disposable bowls',                       qty: '25+ ct' },
+    { item: 'Heavyweight plastic utensils',           qty: '100+ ct' },
+    { item: 'Extra forks pack',                       qty: '50+ ct' },
+    { item: '16-20 oz plastic cups',                  qty: '2 packs of 50' },
+    { item: 'Disposable coffee cups',                 qty: '1 pack' },
+    { item: 'Aluminum foil pans w/ lids (half-size)', qty: '12-15 ct' },
+    { item: 'Large aluminum roasting pan',            qty: '2-3 ct' },
+  ]},
+  { category: 'Supplies & Disposables', color: '#3a3020', listType: 'shopping', items: [
+    { item: 'Heavy duty aluminum foil', qty: '2 rolls' },
+    { item: 'Paper towels',             qty: 'large pack' },
+    { item: 'Napkins',                  qty: '2 large packs' },
+    { item: 'Dish soap + sponge',       qty: '' },
+    { item: 'Trash bags',               qty: '1 box' },
+    { item: 'Zip-lock bags, gallon',    qty: '1 box' },
+    { item: 'Sharpie + masking tape',   qty: '' },
+    { item: 'Disposable gloves',        qty: '1 box' },
+  ]},
+]
+
+export const DEFAULT_MENU: MenuDay[] = [
+  { day: 'Friday Night', color: '#6e3e10', meals: [
+    { meal: 'Dinner', name: 'Burgers, Beer Brats & Sides', items: [
+      '80/20 ground beef patties (8 oz) - salt, pepper, garlic powder',
+      'Beer brats - simmer in beer & onions 30-40 min, then char on grate',
+      'Buns: hamburger buns + hoagie-style brat rolls',
+      'Beer bath: cheap malty beer + sliced onions (onions become a topping)',
+      'Toppings: beer-bath onions, sharp cheddar, brown & spicy mustard, ketchup, pickles',
+      'Sides: pre-made coleslaw, chips',
+    ], note: 'Simmer brats first - never boil hard or casings split. Finish on grate for snap and char.' },
+  ]},
+  { day: 'Saturday', color: '#1a4a2e', meals: [
+    { meal: 'Breakfast', name: 'Eggs, Bacon, Hash Browns + Dutch Oven B&G', items: [
+      'Scrambled eggs - large cast iron batches',
+      'Thick-cut bacon on grill grate over fire',
+      'Frozen hash brown patties on griddle or cast iron',
+      'Dutch Oven #1 (12"): Grands biscuits - ~25 min on coals',
+      'Dutch Oven #2 (10"): Sausage gravy - sausage, flour, milk, S&P',
+    ], note: 'Stage Dutch ovens 20 min before eggs. 2 rounds of biscuits - wrap Round 1 in foil. 8-10 coals on top / 6-8 underneath for the 12".' },
+    { meal: 'Lunch', name: 'Build-Your-Own Deli Sub Bar', items: [
+      'Deli meats: turkey, ham, roast beef',
+      'Cheeses: provolone, pepper jack, Swiss',
+      'Sub/hoagie rolls',
+      'Toppings: lettuce, tomato, onion, banana peppers, black olives',
+      'Condiments: mayo, mustard, Italian dressing',
+      'Sides: kettle chips, pickle spears',
+    ], note: 'Zero cook time - set it out, guys serve themselves.' },
+    { meal: 'Dinner', name: 'Steaks on the Fire + Camp Sides', items: [
+      'NY Strip or Ribeye (10-12 oz per man) - kosher salt, pepper, garlic powder',
+      'Compound butter: softened butter + minced garlic + herbs, wrapped in foil',
+      'Foil packet potatoes - diced russets, butter, onion, seasoning - 30 min on coals',
+      'Cowboy baked beans warmed in Dutch oven',
+    ], note: 'Foil packets go on 30 min before steaks. Pull steaks 5 degrees early, rest 5 min under foil. Top with compound butter.' },
+  ]},
+  { day: 'Sunday Breakfast', color: '#1a3a5c', meals: [
+    { meal: 'Breakfast', name: 'Campfire Breakfast Burritos', items: [
+      'Scrambled eggs with diced bell pepper & onion',
+      'Crumbled breakfast sausage or chorizo',
+      'Shredded cheddar cheese',
+      'Large flour tortillas - warm on grill grate',
+      'Toppings: salsa, hot sauce, sour cream',
+    ], note: 'Everything in one big cast iron skillet. Guys build their own.' },
+  ]},
+]
+
+export function buildDefaultPackList(): PackCategory[] {
+  return [...DEFAULT_GEAR, ...DEFAULT_SHOPPING]
+}

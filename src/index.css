@@ -1,0 +1,17 @@
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { background: #0f0d0a; overscroll-behavior: none; }
+::-webkit-scrollbar { display: none; }
+input, textarea, select {
+  background: #12100e;
+  color: #e8ddd0;
+  border: 1px solid #3e3228;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  width: 100%;
+  outline: none;
+}
+input:focus, textarea:focus, select:focus { border-color: #c8861a; }
+textarea { resize: vertical; min-height: 60px; }
+input[type=checkbox] { width: auto; min-width: unset; }
