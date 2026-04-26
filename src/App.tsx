@@ -7,6 +7,7 @@ import { RsvpTab } from './components/tabs/RsvpTab'
 import { AdminTab } from './components/admin/AdminTab'
 import { useAppConfig } from './hooks/useAppConfig'
 import { useChecklist } from './hooks/useChecklist'
+import { useSwipe } from './hooks/useSwipe'
 
 type TabId = 'packlist' | 'menu' | 'rsvp'
 
@@ -15,6 +16,8 @@ const TABS: { id: TabId; label: string }[] = [
   { id: 'menu',     label: 'Menu' },
   { id: 'rsvp',     label: 'RSVP' },
 ]
+
+const TAB_IDS = TABS.map(t => t.id)
 
 export default function App() {
   const [userName, setUserName] = useState<string | null>(
@@ -25,6 +28,12 @@ export default function App() {
 
   const { config, loading, saveRsvp, savePackList, saveMenu } = useAppConfig()
   const { checked, toggle, clearAll } = useChecklist(userName ?? 'anonymous')
+
+  const currentIdx = TAB_IDS.indexOf(tab)
+  const swipe = useSwipe(
+    () => setTab(TAB_IDS[(currentIdx + 1) % TAB_IDS.length]),
+    () => setTab(TAB_IDS[(currentIdx + TAB_IDS.length - 1) % TAB_IDS.length]),
+  )
 
   if (!userName) return <NameGate onName={setUserName} />
 
@@ -47,7 +56,7 @@ export default function App() {
       }}>
         <div style={{ flex: 1, textAlign: 'center' }}>
           <div style={{
-            fontFamily: '\'Alegreya\', serif',
+            fontFamily: "'Alegreya', serif",
             fontSize: 21, fontWeight: 700,
             color: T.accent, letterSpacing: '0.04em',
           }}>Mizpah Lodge #302</div>
@@ -93,7 +102,7 @@ export default function App() {
             ))}
           </div>
 
-          <div style={{ maxWidth: 600, margin: '0 auto' }}>
+          <div style={{ maxWidth: 600, margin: '0 auto' }} {...swipe}>
             {tab === 'packlist' && <PackListTab data={config.packList} checked={checked} onToggle={toggle} onClearAll={clearAll} />}
             {tab === 'menu'     && <MenuTab data={config.menu} />}
             {tab === 'rsvp'     && <RsvpTab data={config.rsvp} />}
