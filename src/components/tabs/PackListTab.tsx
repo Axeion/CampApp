@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { T } from '../../theme'
 import { ProgressBar } from '../ui/ProgressBar'
 import { Card } from '../ui/Card'
@@ -13,8 +14,18 @@ interface Props {
 }
 
 export function PackListTab({ data, checked, onToggle, onClearAll }: Props) {
+  const [collapsed, setCollapsed] = useState<Set<number>>(new Set())
+
   const allKeys = data.flatMap((c, ci) => c.items.map((_, ii) => `${ci}-${ii}`))
   const done = allKeys.filter(k => checked[k]).length
+
+  function toggleCollapse(ci: number) {
+    setCollapsed(prev => {
+      const next = new Set(prev)
+      if (next.has(ci)) next.delete(ci); else next.add(ci)
+      return next
+    })
+  }
 
   return (
     <div>
@@ -26,7 +37,14 @@ export function PackListTab({ data, checked, onToggle, onClearAll }: Props) {
       {data.map((cat, ci) => {
         const catDone = cat.items.filter((_, ii) => checked[`${ci}-${ii}`]).length
         return (
-          <Card key={ci} headerText={cat.category} headerColor={cat.color ?? T.accentDim} badge={`${catDone}/${cat.items.length}`}>
+          <Card
+            key={ci}
+            headerText={cat.category}
+            headerColor={cat.color ?? T.accentDim}
+            badge={`${catDone}/${cat.items.length}`}
+            collapsed={collapsed.has(ci)}
+            onHeaderClick={() => toggleCollapse(ci)}
+          >
             {cat.items.map((row, ii) => (
               <CheckRow
                 key={ii}
