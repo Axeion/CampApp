@@ -21,6 +21,7 @@ interface Props {
 }
 
 const ADMIN_PIN = '302'
+const SECTION_LABELS: Record<Section, string> = { rsvp: 'RSVP', packlist: 'Pack List', menu: 'Menu' }
 
 export function AdminTab({ rsvp, packList, menu, onSaveRsvp, onSavePackList, onSaveMenu, onClose }: Props) {
   const [section, setSection] = useState<Section>('rsvp')
@@ -36,7 +37,11 @@ export function AdminTab({ rsvp, packList, menu, onSaveRsvp, onSavePackList, onS
   if (!unlocked) {
     return (
       <div style={{ padding: 24, maxWidth: 300, margin: '50px auto', textAlign: 'center' }}>
-        <div style={{ fontSize: 16, fontWeight: 'bold', color: T.accent, marginBottom: 6 }}>Admin Access</div>
+        <div style={{
+          fontFamily: '\'Alegreya\', serif',
+          fontSize: 18, fontWeight: 700,
+          color: T.accent, marginBottom: 6,
+        }}>Admin Access</div>
         <div style={{ fontSize: 13, color: T.muted, marginBottom: 18 }}>Enter PIN to edit</div>
         <input
           type="password" inputMode="numeric" value={pin}
@@ -55,8 +60,7 @@ export function AdminTab({ rsvp, packList, menu, onSaveRsvp, onSavePackList, onS
   }
 
   const reset = () => {
-    const labels: Record<Section, string> = { rsvp: 'RSVP', packlist: 'Pack List', menu: 'Menu' }
-    if (!confirm(`Reset ${labels[section]} to original defaults? This cannot be undone.`)) return
+    if (!confirm(`Reset ${SECTION_LABELS[section]} to original defaults? This cannot be undone.`)) return
     if (section === 'rsvp')     onSaveRsvp(DEFAULT_RSVP)
     if (section === 'packlist') onSavePackList(buildDefaultPackList())
     if (section === 'menu')     onSaveMenu(DEFAULT_MENU)
@@ -64,28 +68,37 @@ export function AdminTab({ rsvp, packList, menu, onSaveRsvp, onSavePackList, onS
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', padding: '12px 14px', borderBottom: `1px solid ${T.cardBorder}`, gap: 8 }}>
-        <span style={{ fontSize: 14, fontWeight: 'bold', color: T.accent, flex: 1 }}>Admin Mode</span>
+      <div style={{
+        display: 'flex', alignItems: 'center',
+        padding: '12px 14px',
+        borderBottom: `1px solid ${T.cardBorder}`,
+        gap: 8,
+      }}>
+        <span style={{
+          fontFamily: '\'Alegreya\', serif',
+          fontSize: 16, fontWeight: 700,
+          color: T.accent, flex: 1,
+        }}>Admin Mode</span>
         <GhostBtn onClick={reset} color={T.red}>Reset</GhostBtn>
         <Btn onClick={onClose} small>Done</Btn>
       </div>
 
-      <div style={{ display: 'flex', background: '#161210', borderBottom: `1px solid ${T.cardBorder}` }}>
+      <div style={{ display: 'flex', background: '#0a1820', borderBottom: `1px solid ${T.cardBorder}` }}>
         {(['rsvp', 'packlist', 'menu'] as Section[]).map(id => (
           <button key={id} onClick={() => setSection(id)} style={{
             flex: 1, padding: '11px 4px', fontSize: 12,
-            fontWeight: section === id ? 'bold' : 'normal',
+            fontWeight: section === id ? 700 : 400,
             color: section === id ? T.accent : T.muted,
             background: 'none', border: 'none',
             borderBottom: section === id ? `2px solid ${T.accent}` : '2px solid transparent',
-            cursor: 'pointer', fontFamily: 'Georgia, serif', textTransform: 'capitalize',
-          }}>{id === 'packlist' ? 'Pack List' : id.toUpperCase() === 'RSVP' ? 'RSVP' : id}</button>
+            cursor: 'pointer',
+          }}>{SECTION_LABELS[id]}</button>
         ))}
       </div>
 
       <div style={{ maxWidth: 600, margin: '0 auto', padding: '0 12px' }}>
         {section === 'rsvp' && (
-          <Card headerText="Edit RSVP List" headerColor="#3a4a6a">
+          <Card headerText="Edit RSVP List" headerColor="#1a3a5c">
             <AdminRsvp data={rsvp} onChange={onSaveRsvp} />
           </Card>
         )}

@@ -1,17 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:wght@400;700&family=Roboto:wght@400;500;700&display=swap');
+
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-body { background: #0f0d0a; overscroll-behavior: none; }
+
+body {
+  background: #0d1b26;
+  overscroll-behavior: none;
+  font-family: 'Roboto', sans-serif;
+  color: #dce8f2;
+}
+
 ::-webkit-scrollbar { display: none; }
+
 input, textarea, select {
-  background: #12100e;
-  color: #e8ddd0;
-  border: 1px solid #3e3228;
+  background: rgba(255,255,255,0.06);
+  color: #dce8f2;
+  border: 1px solid rgba(200,151,46,0.3);
   border-radius: 6px;
   padding: 8px 10px;
-  font-family: Georgia, serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   width: 100%;
   outline: none;
 }
-input:focus, textarea:focus, select:focus { border-color: #c8861a; }
+input:focus, textarea:focus, select:focus { border-color: #c8972e; }
 textarea { resize: vertical; min-height: 60px; }
 input[type=checkbox] { width: auto; min-width: unset; }
+
+select option { background: #0f2233; }

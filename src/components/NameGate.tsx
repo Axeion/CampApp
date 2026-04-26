@@ -13,10 +13,23 @@ export function NameGate({ onName }: { onName: (name: string) => void }) {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: 24, background: T.bg }}>
+    <div style={{
+      display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center',
+      minHeight: '100vh', padding: 24, background: T.bg,
+    }}>
       <div style={{ maxWidth: 300, width: '100%', textAlign: 'center' }}>
-        <div style={{ fontSize: 19, fontWeight: 'bold', color: T.accent, marginBottom: 4 }}>Mizpah Lodge #302</div>
-        <div style={{ fontSize: 13, color: T.muted, marginBottom: 24, fontStyle: 'italic' }}>Camp Cook — Dalton Kock</div>
+        <div style={{
+          fontFamily: '\'Alegreya\', serif',
+          fontSize: 26, fontWeight: 700,
+          color: T.accent, marginBottom: 4,
+        }}>Mizpah Lodge #302</div>
+        <div style={{
+          fontSize: 12, color: T.muted,
+          marginBottom: 32, fontStyle: 'italic',
+          borderBottom: `1px solid rgba(200,151,46,0.25)`,
+          paddingBottom: 20,
+        }}>Camp Cook — Dalton Kock</div>
         <div style={{ fontSize: 14, color: T.text, marginBottom: 12 }}>Who are you?</div>
         <input
           value={value}
@@ -24,9 +37,9 @@ export function NameGate({ onName }: { onName: (name: string) => void }) {
           onKeyDown={e => e.key === 'Enter' && submit()}
           placeholder="Your name"
           autoFocus
-          style={{ textAlign: 'center', marginBottom: 12 }}
+          style={{ textAlign: 'center', marginBottom: 16 }}
         />
-        <Btn onClick={submit}>Let's Go</Btn>
+        <Btn onClick={submit}>Let’s Go</Btn>
       </div>
     </div>
   )
